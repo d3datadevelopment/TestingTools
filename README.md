@@ -6,11 +6,9 @@
 Dieses Paket stellt Hilfstools bereit, um Schwierigkeiten beim Testen von Plugincode aus frei erweiterbaren Frameworks (z.B. Shopsoftware) zu umgehen.
 
 - Methodenbundles lassen sich als Trait klassenabhängig einbinden
-- enthält Methoden für den Produktivcode und vorbereitete Methoden für eigene Tests, um den Produktivcode zu validieren
 
 - `Production\IsMockable`: enthält Methoden zum Mocken von Parentaufrufen
-- `Development\IsMockable`: enthält Testcode für `Production\IsMockable`
-- `Development\IsTestable`: enthält Methoden für bessere Zugänglichkeit von protected Code
+- `Development\CanAccessRestricted`: enthält Methoden für bessere Zugänglichkeit von protected Code
 
 ## Inhaltsverzeichnis
 
@@ -19,7 +17,6 @@ Dieses Paket stellt Hilfstools bereit, um Schwierigkeiten beim Testen von Plugin
 - [Changelog](#changelog)
 - [Beitragen](#beitragen)
 - [Lizenz](#lizenz)
-- [weitere Lizenzen und Nutzungsbedingungen](#weitere-lizenzen-und-nutzungsbedingungen)
 
 ## Installation
 

@@ -13,7 +13,7 @@
       <clover outputFile="build/logs/clover.xml"/>
     </report>
   </coverage>
-  <testsuite name="myModule">
+  <testsuite name="testingTools">
     <directory>./Tests</directory>
   </testsuite>
   <logging/>

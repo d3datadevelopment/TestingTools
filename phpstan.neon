@@ -1,10 +1,7 @@
 parameters:
-    scanFiles:
-        - IntelliSenseHelper.php
-        - ../../oxid-esales/oxideshop-ce/source/oxfunctions.php
-        - ../../oxid-esales/oxideshop-ce/source/overridablefunctions.php
     level: 9
     phpVersion: 70100
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Psr\\Container\\ContainerExceptionInterface is not subtype of Throwable#'
+        - '#Property D3\\TestingTools\\Tests\\Unit\\Development\\HelperClasses\\CanAccessRestrictedClass::\$privateProperty is never read, only written.#'
+        - '#Method D3\\TestingTools\\Tests\\Unit\\Development\\HelperClasses\\CanAccessRestrictedClass::privateMethod\(\) is unused.#'

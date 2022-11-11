@@ -5,12 +5,10 @@
 
 This package provides tools to circumvent difficulties when testing plug-in code from customisable frameworks (e.g. shop software).
 
-- Method bundles can be included as traits depending on the class.
-- contains methods for the production code and prepared methods for own tests to validate the production code
+- method bundles can be included as traits depending on the class.
 
 - `Production\IsMockable`: contains methods for mocking parent calls
-- `Development\IsMockable`: contains test code for `Production\IsMockable`.
-- `Development\IsTestable`: contains methods for better accessibility of protected code
+- `Development\CanAccessRestricted`: contains methods for better accessibility of protected code
 
 ## Table of content
 
@@ -19,7 +17,6 @@ This package provides tools to circumvent difficulties when testing plug-in code
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [License](#license)
-- [Further licences and terms of use](#further-licences-and-terms-of-use)
 
 ## Installation
 
