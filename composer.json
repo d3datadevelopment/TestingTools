@@ -1,0 +1,39 @@
+{
+  "name": "d3/testingtools",
+  "type": "library",
+  "description": "some tools to improve code tests",
+  "keywords": [
+    "PHP Unit",
+    "Tests",
+    "tools"
+  ],
+  "homepage": "https://d3data.de/",
+  "authors": [
+    {
+      "name": "D3 Data Development (Inh. Thomas Dartsch)",
+      "email": "info@shopmodule.com",
+      "homepage": "https://www.d3data.de",
+      "role": "Owner"
+    }
+  ],
+  "support": {
+    "email": "support@shopmodule.com"
+  },
+  "license": [
+    "MIT"
+  ],
+  "require": {
+    "php": "^7 || ^8"
+  },
+  "require-dev": {
+    "phpunit/phpunit" : "^9.5",
+    "friendsofphp/php-cs-fixer": "^3.9",
+    "phpstan/phpstan": "^1.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "D3\\TestingTools\\": "src",
+      "D3\\TestingTools\\Tests\\": "Tests"
+    }
+  }
+}
