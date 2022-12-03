@@ -15,7 +15,8 @@ declare(strict_types=1);
 
 namespace D3\TestingTools\Production;
 
-use RuntimeException as RuntimeExceptionAlias;
+use OxidEsales\Eshop\Core\Registry;
+use Psr\Log\LoggerInterface;
 
 trait IsMockable
 {
@@ -27,14 +28,67 @@ trait IsMockable
      *
      * @return false|mixed
      */
-    protected function d3CallMockableParent(string $methodName, array $arguments = [])
+    protected function d3CallMockableFunction(callable $callable, array $arguments = [])
     {
-        if (get_parent_class($this)) {
-            /** @var callable $callable */
-            $callable = [ parent::class, $methodName ];
-            return call_user_func_array($callable, $arguments);
-        }
+        return call_user_func_array($callable, $arguments);
+    }
 
-        throw new RuntimeExceptionAlias('Cannot use "parent" when current class scope has no parent');
+    /**
+     * for mocking use callback:
+     *
+     * $object->method('d3GetMockableOxNewObject')->willReturnCallback(
+     *   function () use ($manufacturerMock) {
+     *     $args = func_get_args();
+     *     switch ($args[0]) {
+     *       case Article::class:
+     *         return $manufacturerMock;
+     *       default:
+     *         return call_user_func_array("oxNew", $args);
+     *     }
+     *   }
+     * );
+     *
+     * @template T
+     * @param class-string<T> $className
+     * @param mixed  ...$args   constructor arguments
+     *
+     * @return T
+     */
+    protected function d3GetMockableOxNewObject(string $className)
+    {
+        $arguments = func_get_args();
+        return call_user_func_array("oxNew", $arguments);
+    }
+
+    /**
+     * for mocking use callback:
+     *
+     * $object->method('d3GetMockableRegistryObject')->willReturnCallback(
+     *   function () use ($utilsServerMock) {
+     *     $args = func_get_args();
+     *     switch ($args[0]) {
+     *       case UtilsServer::class:
+     *         return $utilsServerMock;
+     *       default:
+     *         return Registry::get($args[0]);
+     *     }
+     *   }
+     *
+     * @template T
+     * @param class-string<T> $className
+     *
+     * @return T
+     */
+    protected function d3GetMockableRegistryObject(string $className)
+    {
+        return Registry::get($className);
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function d3GetMockableLogger(): LoggerInterface
+    {
+        return Registry::getLogger();
     }
 }
