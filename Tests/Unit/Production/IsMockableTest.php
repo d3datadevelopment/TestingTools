@@ -18,6 +18,8 @@ namespace D3\TestingTools\Tests\Unit\Production;
 use D3\TestingTools\Development\CanAccessRestricted;
 use D3\TestingTools\Production\IsMockable;
 use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableClass;
+use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableParent;
+use OxidEsales\Eshop\Application\Model\Article;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -30,44 +32,84 @@ class IsMockableTest extends TestCase
     /**
      * @test
      * @throws ReflectionException
+     * @covers \D3\TestingTools\Production\IsMockable::d3CallMockableFunction
      */
-    public function callMockableNoParent(): void
+    public function callMockableFunctionMissingFunction(): void
     {
         $methodName = $this->getRandomString();
         $argument   = $this->getRandomString();
 
         $traitMock = $this->getObjectForTrait(IsMockable::class);
 
-        $this->expectException(RuntimeException::class);
+        // argument #1 is not a valid callable
+        $this->expectError();
 
         $this->callMethod(
             $traitMock,
-            'd3CallMockableParent',
-            [$methodName, [$argument]]
+            'd3CallMockableFunction',
+            [[$traitMock, $methodName], [$argument]]
         );
     }
 
     /**
+     * @param $fqClassName
+     * @param $expected
      * @test
      * @throws ReflectionException
+     * @dataProvider callMockableFunctionFromClassDataProvider
+     * @covers \D3\TestingTools\Production\IsMockable::d3CallMockableFunction
      */
-    public function callMockableParent(): void
+    public function callMockableFunctionFromClass($fqClassName, $expected): void
     {
         $methodName = 'myMethod';
         $argument   = $this->getRandomString();
 
         /** @var MockObject $mock */
-        $mock = $this->getMockBuilder(IsMockableClass::class)
-            ->getMock();
-        // method from mocked class will never call, run method from parent class only
-        $mock->expects($this->never())->method($methodName);
+        $mock = new(IsMockableClass::class);
+
+        if ($fqClassName === 'mockObject') {
+            $fqClassName = $mock;
+        }
 
         $this->assertSame(
-            'ParentClass::myMethod##'.$argument,
+            $expected.$argument,
             $this->callMethod(
                 $mock,
-                'd3CallMockableParent',
-                [$methodName, [$argument]]
+                'd3CallMockableFunction',
+                [[$fqClassName, $methodName], [$argument]]
+            )
+        );
+    }
+
+    /**
+     * @return array[]
+     */
+    public function callMockableFunctionFromClassDataProvider()
+    {
+        return [
+            'parent static method' => [IsMockableParent::class, 'ParentClass::myMethod##'],
+            'current static method' => [IsMockableClass::class, 'currentClass::myMethod##'],
+            'current object method' => ['mockObject', 'currentClass::myMethod##']
+        ];
+    }
+
+    /**
+     * @test
+     * @return void
+     * @throws ReflectionException
+     * @covers \D3\TestingTools\Production\IsMockable::d3GetMockableOxNewObject
+     */
+    public function canGetMockableOxNewObject()
+    {
+        /** @var MockObject $mock */
+        $mock = new(IsMockableClass::class);
+
+        $this->assertInstanceOf(
+            Article::class,
+            $this->callMethod(
+                $mock,
+                'd3GetMockableOxNewObject',
+                [Article::class]
             )
         );
     }
