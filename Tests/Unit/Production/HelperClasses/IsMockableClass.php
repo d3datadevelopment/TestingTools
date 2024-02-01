@@ -31,6 +31,7 @@ class IsMockableClass extends IsMockableParent
         return 'currentClass::myMethod##'.$arg;
     }
 
-    public function fakeMethod()
-    {}
+    public function fakeMethod(): void
+    {
+    }
 }

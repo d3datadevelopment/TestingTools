@@ -18,6 +18,7 @@ namespace D3\TestingTools\Tests\Unit\Development;
 use D3\TestingTools\Development\CanAccessRestricted;
 use D3\TestingTools\Tests\Unit\Development\HelperClasses\CanAccessRestrictedClass;
 use Error;
+use Generator;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -26,7 +27,7 @@ class CanAccessRestrictedTest extends TestCase
     use CanAccessRestricted;
 
     /** @var CanAccessRestrictedClass */
-    public $class;
+    public CanAccessRestrictedClass $class;
 
     public function setUp(): void
     {
@@ -81,17 +82,12 @@ class CanAccessRestrictedTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function canCallMethodDataProvider(): array
+    public function canCallMethodDataProvider(): Generator
     {
-        return [
-            'public method'         => ['publicMethod', true],
-            'protected method'      => ['protectedMethod', false],
-            'private method'        => ['privateMethod', false],
-            'final public method'   => ['finalPublicMethod', true],
-        ];
+        yield 'public method'         => ['publicMethod', true];
+        yield 'protected method'      => ['protectedMethod', false];
+        yield 'private method'        => ['privateMethod', false];
+        yield 'final public method'   => ['finalPublicMethod', true];
     }
 
     /**
@@ -145,16 +141,11 @@ class CanAccessRestrictedTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function canSetAndGetClassPropertiesDataProvider(): array
+    public function canSetAndGetClassPropertiesDataProvider(): Generator
     {
-        return [
-            'public property'         => ['publicProperty', true],
-            'protected property'      => ['protectedProperty', false],
-            'private property'        => ['privateProperty', false],
-        ];
+        yield 'public property'         => ['publicProperty', true];
+        yield 'protected property'      => ['protectedProperty', false];
+        yield 'private property'        => ['privateProperty', false];
     }
 
     /**
@@ -216,16 +207,11 @@ class CanAccessRestrictedTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function canSetAndGetMockedPropertiesDataProvider(): array
+    public function canSetAndGetMockedPropertiesDataProvider(): Generator
     {
-        return [
-            'public property'         => ['publicProperty', true],
-            'protected property'      => ['protectedProperty', false],
-            'private property'        => ['privateProperty', true], // because private properties not contained in mock
-        ];
+        yield 'public property'         => ['publicProperty', true];
+        yield 'protected property'      => ['protectedProperty', false];
+        yield 'private property'        => ['privateProperty', true]; // because private properties not contained in mock
     }
 
     /**

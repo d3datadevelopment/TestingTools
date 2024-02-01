@@ -19,11 +19,11 @@ use D3\TestingTools\Development\CanAccessRestricted;
 use D3\TestingTools\Production\IsMockable;
 use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableClass;
 use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableParent;
+use Generator;
 use OxidEsales\Eshop\Application\Model\Article;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
-use RuntimeException;
 
 class IsMockableTest extends TestCase
 {
@@ -52,14 +52,15 @@ class IsMockableTest extends TestCase
     }
 
     /**
-     * @param $fqClassName
-     * @param $expected
-     * @test
+     * @param string $fqClassName
+     * @param string $expected
+     *
      * @throws ReflectionException
+     * @test
      * @dataProvider callMockableFunctionFromClassDataProvider
-     * @covers \D3\TestingTools\Production\IsMockable::d3CallMockableFunction
+     * @covers       \D3\TestingTools\Production\IsMockable::d3CallMockableFunction
      */
-    public function callMockableFunctionFromClass($fqClassName, $expected): void
+    public function callMockableFunctionFromClass(string $fqClassName, string $expected): void
     {
         $methodName = 'myMethod';
         $argument   = $this->getRandomString();
@@ -81,16 +82,11 @@ class IsMockableTest extends TestCase
         );
     }
 
-    /**
-     * @return array[]
-     */
-    public function callMockableFunctionFromClassDataProvider()
+    public function callMockableFunctionFromClassDataProvider(): Generator
     {
-        return [
-            'parent static method' => [IsMockableParent::class, 'ParentClass::myMethod##'],
-            'current static method' => [IsMockableClass::class, 'currentClass::myMethod##'],
-            'current object method' => ['mockObject', 'currentClass::myMethod##']
-        ];
+        yield 'parent static method' => [IsMockableParent::class, 'ParentClass::myMethod##'];
+        yield 'current static method' => [IsMockableClass::class, 'currentClass::myMethod##'];
+        yield 'current object method' => ['mockObject', 'currentClass::myMethod##'];
     }
 
     /**

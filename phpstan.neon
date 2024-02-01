@@ -1,6 +1,12 @@
 parameters:
+    scanFiles:
+        - ../../oxid-esales/oxideshop-ce/source/bootstrap.php
+        - ../../oxid-esales/oxideshop-ce/source/oxfunctions.php
+        - ../../oxid-esales/oxideshop-ce/source/overridablefunctions.php
+    paths:
+        - .
     level: 9
-    phpVersion: 70100
+    phpVersion: 80000
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Property D3\\TestingTools\\Tests\\Unit\\Development\\HelperClasses\\CanAccessRestrictedClass::\$privateProperty is never read, only written.#'

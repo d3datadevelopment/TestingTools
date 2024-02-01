@@ -18,13 +18,13 @@ namespace D3\TestingTools\Tests\Unit\Development\HelperClasses;
 class CanAccessRestrictedClass
 {
     /** @var string */
-    public $publicProperty = 'publicProperty';
+    public string $publicProperty = 'publicProperty';
 
     /** @var string */
-    protected $protectedProperty = 'protectedProperty';
+    protected string $protectedProperty = 'protectedProperty';
 
     /** @var string */
-    private $privateProperty = 'privateProperty';
+    private string $privateProperty = 'privateProperty';
 
     /**
      * @param string $arg

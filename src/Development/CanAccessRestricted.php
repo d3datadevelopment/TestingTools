@@ -23,32 +23,33 @@ use ReflectionProperty;
 trait CanAccessRestricted
 {
     /**
-     * Calls a private or protected object method.
+     * Calls a public, private or protected object method.
      *
      * @param object $object
      * @param string $methodName
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return mixed
      * @throws ReflectionException
      */
-    public function callMethod($object, string $methodName, array $arguments = [])
+    public function callMethod(object $object, string $methodName, array $arguments = []): mixed
     {
-        $class = new ReflectionClass($object);
+        $class  = new ReflectionClass($object);
         $method = $class->getMethod($methodName);
         $method->setAccessible(true);
+
         return $method->invokeArgs($object, $arguments);
     }
 
     /**
-     * Sets a private or protected property in defined class instance
+     * Sets a public, private or protected property in class instance
      *
      * @param object $object
      * @param string $valueName
      * @param mixed $value
      * @throws ReflectionException
      */
-    public function setValue($object, string $valueName, $value): void
+    public function setValue(object $object, string $valueName, mixed $value): void
     {
         $reflection = new ReflectionClass($object);
         $property = $reflection->getProperty($valueName);
@@ -57,14 +58,14 @@ trait CanAccessRestricted
     }
 
     /**
-     * get a private or protected property from defined class instance
+     * get a public, private or protected property from class instance
      *
      * @param object $object
      * @param string $valueName
      * @return mixed
      * @throws ReflectionException
      */
-    public function getValue($object, string $valueName)
+    public function getValue(object $object, string $valueName): mixed
     {
         $reflection = new ReflectionClass($object);
         $property = $reflection->getProperty($valueName);
@@ -73,7 +74,7 @@ trait CanAccessRestricted
     }
 
     /**
-     * Sets a private or protected property in mocked class instance based on original class
+     * Sets a public, private or protected property in mocked class instance based on original class
      * (required for e.g. final properties, which aren't contained in mock, but in original class)
      * @param string $mockedClassName  * FQNS of original class
      * @param MockObject $object       * mock object
@@ -82,7 +83,7 @@ trait CanAccessRestricted
      *
      * @throws ReflectionException
      */
-    public function setMockedClassValue(string $mockedClassName, MockObject $object, string $valueName, $value): void
+    public function setMockedClassValue(string $mockedClassName, MockObject $object, string $valueName, mixed $value): void
     {
         $property = new ReflectionProperty($mockedClassName, $valueName);
         $property->setAccessible(true);
@@ -100,7 +101,7 @@ trait CanAccessRestricted
      * @return mixed
      * @throws ReflectionException
      */
-    public function getMockedClassValue(string $mockedClassName, MockObject $object, string $valueName)
+    public function getMockedClassValue(string $mockedClassName, MockObject $object, string $valueName): mixed
     {
         $property = new ReflectionProperty($mockedClassName, $valueName);
         $property->setAccessible(true);

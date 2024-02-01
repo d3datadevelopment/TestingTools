@@ -23,12 +23,12 @@ trait IsMockable
     /**
      * mockable wrapper for uncertain parent calls
      *
-     * @param string $methodName
+     * @param callable $callable
      * @param array  $arguments
      *
      * @return false|mixed
      */
-    protected function d3CallMockableFunction(callable $callable, array $arguments = [])
+    protected function d3CallMockableFunction(callable $callable, array $arguments = []): mixed
     {
         return call_user_func_array($callable, $arguments);
     }
@@ -54,7 +54,7 @@ trait IsMockable
      *
      * @return T
      */
-    protected function d3GetMockableOxNewObject(string $className)
+    protected function d3GetMockableOxNewObject(string $className, mixed ...$args)
     {
         $arguments = func_get_args();
         return call_user_func_array("oxNew", $arguments);
