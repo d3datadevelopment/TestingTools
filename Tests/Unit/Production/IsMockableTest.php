@@ -24,8 +24,10 @@ use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableParent;
 use Exception;
 use Generator;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\Config;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use ReflectionException;
 
 class IsMockableTest extends TestCase
@@ -115,6 +117,48 @@ class IsMockableTest extends TestCase
                 $mock,
                 'd3GetMockableOxNewObject',
                 [Article::class]
+            )
+        );
+    }
+
+    /**
+     * @test
+     * @return void
+     * @throws ReflectionException
+     * @covers \D3\TestingTools\Production\IsMockable::d3GetMockableRegistryObject
+     */
+    public function canGetMockableRegistryObject(): void
+    {
+        /** @var MockObject $mock */
+        $mock = new(IsMockableClass::class);
+
+        $this->assertInstanceOf(
+            Config::class,
+            $this->callMethod(
+                $mock,
+                'd3GetMockableRegistryObject',
+                [Config::class]
+            )
+        );
+    }
+
+    /**
+     * @test
+     * @return void
+     * @throws ReflectionException
+     * @covers \D3\TestingTools\Production\IsMockable::d3GetMockableLogger
+     */
+    public function canGetMockableLogger()
+    {
+        /** @var MockObject $mock */
+        $mock = new(IsMockableClass::class);
+
+        $this->assertInstanceOf(
+            LoggerInterface::class,
+            $this->callMethod(
+                $mock,
+                'd3GetMockableLogger',
+                [Config::class]
             )
         );
     }
