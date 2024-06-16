@@ -21,6 +21,7 @@ use D3\TestingTools\Development\CanAccessRestricted;
 use D3\TestingTools\Production\IsMockable;
 use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableClass;
 use D3\TestingTools\Tests\Unit\Production\HelperClasses\IsMockableParent;
+use Exception;
 use Generator;
 use OxidEsales\Eshop\Application\Model\Article;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -38,19 +39,25 @@ class IsMockableTest extends TestCase
      */
     public function callMockableFunctionMissingFunction(): void
     {
+        set_error_handler(static function (int $errno, string $errstr): void {
+            throw new Exception($errstr, $errno);
+        }, E_USER_WARNING);
+
         $methodName = $this->getRandomString();
         $argument   = $this->getRandomString();
 
         $traitMock = $this->getObjectForTrait(IsMockable::class);
 
         // argument #1 is not a valid callable
-        $this->expectError();
+        $this->expectExceptionMessage('must be of type callable, array given');
 
         $this->callMethod(
             $traitMock,
             'd3CallMockableFunction',
             [[$traitMock, $methodName], [$argument]]
         );
+
+        restore_error_handler();
     }
 
     /**
