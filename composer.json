@@ -30,7 +30,8 @@
   "require-dev": {
     "phpunit/phpunit" : "^9.5",
     "friendsofphp/php-cs-fixer": "^3.9",
-    "phpstan/phpstan": "^1.8"
+    "phpstan/phpstan": "^1.8",
+    "infection/infection": "^0.29.5"
   },
   "autoload": {
     "psr-4": {
@@ -50,6 +51,8 @@
 
     "phpunit": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --config=vendor/d3/testingtools/ --no-coverage",
     "phpunit-line-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --config=vendor/d3/testingtools/ --coverage-html=reports/phpunit/d3testingtools",
-    "phpunit-path-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --config=vendor/d3/testingtools/ --coverage-html=reports/phpunit/d3testingtools --path-coverage"
+    "phpunit-path-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --config=vendor/d3/testingtools/ --coverage-html=reports/phpunit/d3testingtools --path-coverage",
+
+    "infection": "./vendor/bin/infection --configuration=vendor/d3/testingtools/infection.json5"
   }
 }

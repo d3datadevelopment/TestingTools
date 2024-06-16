@@ -1,0 +1,35 @@
+{
+  "source": {
+    "directories": [
+      "vendor/d3/testingtools"
+    ],
+    "excludes": [
+      ".php-cs-fixer.php",
+      "rector.php",
+      "Tests"
+    ]
+  },
+  "timeout": 60,
+  "logs": {
+    "text": "../../../reports/infection/d3testingtools/infection.log",
+    "html": "../../../reports/infection/d3testingtools/infection.html",
+    "summary": "../../../reports/infection/d3testingtools/summary.log",
+    "json": "../../../reports/infection/d3testingtools/infection-log.json",
+    "perMutator": "../../../reports/infection/d3testingtools/per-mutator.md",
+    "summaryJson": "../../../reports/infection/d3testingtools/summary.json"
+  },
+  "tmpDir": "./infection/tmp",
+  "phpUnit": {
+    "configDir": "."
+  },
+  "mutators": {
+    "@default": true,
+    "@function_signature": false,
+    "global-ignoreSourceCodeByRegex": [
+      ".*\\sstartProfile\\(.*",
+      ".*\\sstopProfile\\(.*"
+    ]
+  },
+  "testFramework":"phpunit",
+  "bootstrap":"source/bootstrap.php"
+}
