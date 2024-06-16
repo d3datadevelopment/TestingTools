@@ -43,7 +43,7 @@
     }
   },
   "scripts": {
-    "runtests": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --bootstrap=source/bootstrap.php --config=vendor/d3/testingtools/",
+    "phpunit": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --config=vendor/d3/testingtools/",
     "php-cs-fixer_audit": "./vendor/bin/php-cs-fixer list-files --config=./vendor/d3/testingtools/.php-cs-fixer.php",
     "php-cs-fixer_fix": "./vendor/bin/php-cs-fixer fix --config=./vendor/d3/testingtools/.php-cs-fixer.php",
     "phpstan": "./vendor/bin/phpstan analyse -c./vendor/d3/testingtools/phpstan.neon"
