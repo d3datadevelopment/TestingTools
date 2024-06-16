@@ -34,7 +34,11 @@
   },
   "autoload": {
     "psr-4": {
-      "D3\\TestingTools\\": "src",
+      "D3\\TestingTools\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "D3\\TestingTools\\Tests\\": "Tests"
     }
   },
