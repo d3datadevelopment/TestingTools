@@ -26,7 +26,7 @@ Dieses Paket erfordert ein mit Composer installiertes Projekt.
 
 
 ```bash
-php composer require d3/d3/testingtools:^1.0
+php composer require d3/testingtools:^1.0
 ```
 
 ## Verwendung
