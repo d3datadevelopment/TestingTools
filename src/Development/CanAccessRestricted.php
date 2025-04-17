@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace D3\TestingTools\Development;
 
+use OxidEsales\EshopCommunity\Internal\Container\ContainerBuilderFactory;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use ReflectionException;
@@ -108,5 +110,41 @@ trait CanAccessRestricted
         $property = new ReflectionProperty($mockedClassName, $valueName);
         $property->setAccessible(true);
         return $property->getValue($object);
+    }
+
+    /**
+     * use \OxidEsales\EshopCommunity\Internal\Container\ContainerFactory::resetContainer() to undo these modifications
+     * @param array<string, object> $services
+     * @return void
+     * @throws ReflectionException
+     */
+    public function addServiceMocks(array $services): void
+    {
+        $builder = (new ContainerBuilderFactory())->create()->getContainer();
+
+        array_walk($services, function ($service, $serviceId) use ($builder) {
+            if ($builder->has($serviceId)) {
+                $builder->set($serviceId, $service);
+            }
+        });
+
+        $builder->compile();
+        $container = ContainerFactory::getInstance();
+        $reflection = new ReflectionClass($container);
+        $property = $reflection->getProperty($this->getDIContainerPropertyName($reflection));
+        $property->setValue($container, $builder);
+    }
+
+    protected function getDIContainerPropertyName(ReflectionClass $containerReflection): string
+    {
+        $property = current(array_filter($containerReflection->getProperties(), function (ReflectionProperty $property) {
+            return stristr($property->getName(), 'container');
+        }));
+
+        if (!is_object($property) || !$property instanceof ReflectionProperty) {
+            throw new \RuntimeException("can't find container property");
+        }
+
+        return $property->getName();
     }
 }
