@@ -36,6 +36,9 @@ Binden Sie den jeweiligen Trait in Ihre Klasse ein und verwenden die gewünschte
 ```
 use \D3\TestingTools\Production\IsMockable;
 ```
+```
+use \D3\TestingTools\Development\CanAccessRestricted;
+```
 
 ## Changelog
 

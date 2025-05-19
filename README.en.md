@@ -35,6 +35,9 @@ Include the respective trait in your class and use the desired method in your co
 ```
 use \D3\TestingTools\Production\IsMockable;
 ```
+```
+use \D3\TestingTools\Development\CanAccessRestricted;
+```
 
 ## Changelog
 

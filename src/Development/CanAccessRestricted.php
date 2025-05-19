@@ -23,6 +23,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use Symfony\Component\DependencyInjection\Definition;
 
 trait CanAccessRestricted
 {
@@ -124,7 +125,9 @@ trait CanAccessRestricted
 
         array_walk($services, function ($service, $serviceId) use ($builder) {
             if ($builder->has($serviceId)) {
+                $definition = $builder->getDefinition($serviceId);
                 $builder->set($serviceId, $service);
+                $builder->setDefinition($serviceId, $definition);
             }
         });
 
