@@ -135,6 +135,7 @@ trait CanAccessRestricted
         $container = ContainerFactory::getInstance();
         $reflection = new ReflectionClass($container);
         $property = $reflection->getProperty($this->getDIContainerPropertyName($reflection));
+        $property->setAccessible(true);
         $property->setValue($container, $builder);
     }
 
